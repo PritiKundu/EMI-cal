@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    *{
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+      font-family: serif;
+    }
+    body{
+      background-color: #8BC6EC;
+      background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+    }
+
+    h2{
+      font-size: 38px;
+      margin: 70px 0px;
+    }
+
+    input[type="range"]{
+      width: 75%;
+    }
+
+    input[type="text"]{
+      text-align: center;
+    }
+
+    .value-left{
+      padding-right: 6.34em;
+    }
+
+    .calculate{
+      width: 10%;
+      margin: auto;
+      margin-top: 70px;
+      margin-bottom: 70px;
+    }
+
+    #calculateButton{
+      padding: 8px 45px;
+      border-radius: 25px;
+    }
+
+    #display{
+      margin: auto;
+      width: 500px;
+      height: 10vh;
+      border-radius: 25px;
+      box-shadow: 5px 8px 15px gray;
+      text-align: center;
+      padding: 20px 0px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      h2 {
+          font-size: 32px!important; 
+          margin: 60px 0px!important;
+      }
+
+      .Amount{
+        margin-bottom: 20px;
+      }
+
+      .Years{
+        margin-bottom: 20px;
+      }
+
+      .value-left {
+        padding-right: 0px; 
+      }
+
+      .calculate {
+          width: 26%!important;
+      }
+
+      #display{
+        width: 400px!important;
+      }
+
+      .calculate {
+          margin-top: 50px!important;
+          margin-bottom: 35px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <section class="container main-section">
+    <h2 class="text-center mt-5">Personal Loan EMI Calculator</h2>
+    <div class="mt-5">
+      <div class="row">
+        <div class="col-lg-4 Amount">
+          Amount you need <input type="text" id="inputAmount" size="18" >
+        </div>
+        <div class="col-lg-4 Years">
+          For <input type="text" id="inputYear" size="4"> years
+        </div>
+        <div class="col-lg-4">
+          Interest rate <input type="text" id="inputIntRate" size="4"> %
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <div class="row">
+        <div class="col-4">
+          <input type="range" id="AmountRange" min="10000" max="500000" value="10000" onchange="AmountChange()">
+        </div>
+        <div class="col-4">
+          <input type="range" id="YearRange" min="1" max="5" value="1" onchange="YearChange()">
+        </div>
+        <div class="col-4">
+          <input type="range" id="InterestRange" min="10.45" max="18.45" value="10.45" onchange="InterestChange()">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="row">
+        <div class="col-4">
+          <span>&#8377; 10,000</span>
+          <span class="value-left float-end">&#8377; 5,00,000</span>
+        </div>
+        <div class="col-4">
+          <span>1</span>
+          <span class="value-left float-end">5</span>       
+         </div>
+        <div class="col-4">
+          <span>10.45%</span>
+          <span class="value-left float-end">18.45%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calculate">
+      <button id="calculateButton" class="btn btn-secondary" onclick="CalculateEMI()">Calculate</button>
+    </div>
+
+    <div id="display">
+
+    </div>
+
+  </section>
+
+
+  <script type="text/javascript">
+    function AmountChange(){
+      document.getElementById("inputAmount").value = document.getElementById("AmountRange").value;
+    }
+
+    function YearChange(){
+      document.getElementById("inputYear").value = document.getElementById("YearRange").value;
+    }
+
+    function InterestChange(){
+      document.getElementById("inputIntRate").value = document.getElementById("InterestRange").value;
+    }
+
+    function CalculateEMI(){
+      var P = parseInt(document.getElementById("inputAmount").value);
+      var r =  parseFloat(document.getElementById("inputIntRate").value)/12/100;
+      var n = parseInt(document.getElementById("inputYear").value)*12;
+      var EMI = P * r * Math.pow((1+r), n)/ Math.pow((1+r),n)-1;
+
+      document.getElementById("display").innerHTML = `<h5> Your monthly EMI is : ${EMI.toLocaleString("en-in", {style: "currency", currency: "INR"})}</h5>`;
+    }
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  
+</body>
+</html>
